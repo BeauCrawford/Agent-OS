@@ -16,7 +16,7 @@ This document defines the exhaustive invariants that must hold true for any COMM
 
 5. **Idempotency**: Running the command multiple times in the same state must produce identical results, without cumulative side effects.
 
-6. **Non-Destructive**: The command must never modify, create, delete, stage, commit, or otherwise alter any files, Git state, or system configuration. Read-only operations only.
+6. **Bounded Side Effects**: Commands are read-only by default. A command may create, edit, or delete files only when its own command document explicitly permits that side effect and defines the allowed paths, safeguards, and cleanup scope. Commands must never stage, commit, reset, push, or otherwise alter Git state unless the command document explicitly permits that Git operation and active user permissions allow it.
 
 7. **Resource Bounds**: Execution must complete within reasonable time and memory limits (e.g., <30 seconds, <100MB memory), avoiding infinite loops or excessive resource consumption.
 
@@ -44,7 +44,7 @@ This document defines the exhaustive invariants that must hold true for any COMM
 
 17. **Purpose Alignment**: The command must fulfill its documented purpose exactly, without additional features or deviations.
 
-18. **User Safety**: Must prevent any actions that could harm the user, workspace, or system (e.g., no destructive Git operations).
+18. **User Safety**: Must prevent any actions that could harm the user, workspace, or system. Destructive or overwriting actions must be constrained to command-owned outputs unless the user explicitly authorizes a broader scope.
 
 19. **Privacy Preservation**: Must not expose sensitive information (e.g., credentials, private data) in output.
 
@@ -64,7 +64,7 @@ This document defines the exhaustive invariants that must hold true for any COMM
 
 26. **Auditability**: Execution should be traceable through logs or reproducible steps, though not exposed to the user.
 
-27. **Compliance with Global Rules**: Must adhere to overarching system invariants (e.g., no file modifications, security policies).
+27. **Compliance with Global Rules**: Must adhere to overarching system invariants, active tool permissions, repository safety rules, and command-specific side-effect scopes.
 
 ## Example Application to SHOW_DELTAS
 
@@ -72,5 +72,12 @@ This document defines the exhaustive invariants that must hold true for any COMM
 - **Execution**: Runs Git status/diff commands without staging or committing.
 - **Output**: Provides deltas summary and formatted commit message.
 - **Behavior**: Read-only, safe for any Git repository state.
+
+## Example Application to COMPILE
+
+- **Invocation**: Only triggers on "COMPILE".
+- **Execution**: Reads source Agent OS Markdown and regenerates the compiled `/os/min` Markdown set.
+- **Output**: Reports generated files, removed stale files, and boot path.
+- **Behavior**: May create, update, and remove files only under `/os/min`; it must not alter source command documents or Git state.
 
 These invariants ensure commands like SHOW_DELTAS are reliable, safe, and predictable.

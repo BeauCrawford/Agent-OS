@@ -56,9 +56,11 @@ Once initialized, command documents under `os/commands` can be invoked by their 
 
 ## Current Tooling
 
-The first concrete command is `SHOW_DELTAS`.
+The current command set includes `SHOW_DELTAS` and `COMPILE`.
 
 `SHOW_DELTAS` asks Git for the current working tree state, reads enough changed or untracked content to understand the substance of the deltas, and returns a concise summary plus a ready-to-use commit message.
+
+`COMPILE` builds a minimal Agent OS distribution under `os/min` for LLM consumption, so future sessions can boot from `/os/min/BOOT.md` and load the fewest practical tokens by loading command files lazily only when they are invoked.
 
 ## Design Principle
 
