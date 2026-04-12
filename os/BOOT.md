@@ -1,6 +1,6 @@
 # **Agent OS Boot**
 
-Semantic Version: `0.1.0`
+Semantic Version: `0.2.0`
 
 Start here.
 
@@ -49,13 +49,14 @@ You must:
 When booting Agent OS, do this first:
 
 1. Read this file: `os/BOOT.md`.
-2. Read and execute the command boot document: [Command Boot](./commands/BOOT.md).
-3. Load the command model from [COMMAND](./commands/COMMAND.md).
-4. Load the command invariants from [Command Invariants](./commands/Invariants.md).
-5. Discover available command documents under `os/commands`.
-6. Report whether Agent OS initialized successfully.
+2. Load the OS invariants from [Agent OS Invariants](./Invariants.md).
+3. Read and execute the command boot document: [Command Boot](./commands/BOOT.md).
+4. Load the command model from [COMMAND](./commands/COMMAND.md).
+5. Load the command invariants from [Command Invariants](./commands/Invariants.md).
+6. Discover available command documents under `os/commands`.
+7. Report whether Agent OS initialized successfully.
 
-The command boot document defines the canonical boot behavior for the command subsystem. This top-level boot file defines the agent's Agent OS identity and mission.
+The OS invariants define the global operating contract for Agent OS. The command boot document defines the canonical boot behavior for the command subsystem. This top-level boot file defines the agent's Agent OS identity and mission.
 
 ---
 
@@ -81,6 +82,7 @@ Mission:
 
 Loaded:
 - os/BOOT.md
+- os/Invariants.md
 - os/commands/BOOT.md
 - os/commands/COMMAND.md
 - os/commands/Invariants.md
