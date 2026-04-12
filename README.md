@@ -54,6 +54,11 @@ An agent boots Agent OS by reading `os/BOOT.md`, then following the command boot
 
 Once initialized, command documents under `os/commands` can be invoked by their documented trigger phrases. Commands are exact by default, case-sensitive, and read-only unless the command explicitly allows side effects.
 
+## Documentation
+
+- [Theory](docs/theory/README.md): Explains the ideas behind Agent OS, including Markdown as operating context, commands as contracts, invariants, compilation, and changelog memory.
+- [Glossary](docs/glossary/README.md): Defines the core Agent OS terms and maps them to the invariants and constraints they affect.
+
 ## Current Tooling
 
 The current command set includes `SHOW_DELTAS` and `COMPILE`.
