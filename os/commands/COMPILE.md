@@ -51,8 +51,8 @@ This command must not:
 When invoked, the agent must:
 
 1. Load the source Agent OS documents needed to understand boot, command semantics, invariants, and available commands.
-2. Discover command documents under `os/commands/**/*.md`.
-3. Exclude supporting documents that are not invokable commands unless their behavior must be exposed in the compiled OS.
+2. Discover command documents only from direct child Markdown files matching `os/commands/*.md`.
+3. Exclude `os/commands/Invariants.md` and do not recursively scan nested command directories such as `os/commands/git`.
 4. Generate `os/min/BOOT.md` as the only required boot file.
 5. Embed the minimal identity, mission, safety, invocation, side-effect, and lazy-loading rules directly in `os/min/BOOT.md`.
 6. Embed a compact command registry in `os/min/BOOT.md` with trigger phrase, purpose, path, and side-effect scope for each compiled command.
@@ -75,12 +75,10 @@ The compiled output must include:
 
 ```text
 os/min/BOOT.md
-os/min/commands/COMMAND.md
-os/min/commands/COMPILE.md
-os/min/commands/SHOW_DELTAS.md
+os/min/commands/<direct-command-name>.md
 ```
 
-If the source command set changes, update the compiled file list to match the current invokable commands.
+The command file set must be derived dynamically from direct child command documents under `os/commands/*.md`, excluding `Invariants.md`. Do not hard-code a default command list.
 
 ---
 

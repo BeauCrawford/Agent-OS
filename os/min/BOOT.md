@@ -9,6 +9,7 @@ Registry:
 |Trig|Load|Do|Effects|
 |-|-|-|-|
 |`BOOT`|this file|reinit min OS|read|
+|`ADD_CHANGE_LOG`|`os/min/commands/ADD_CHANGE_LOG.md`|write dated changelog from Git deltas|write new `change-log/**/README.md`; edit `os/BOOT.md` version line|
 |`COMMAND`|`os/min/commands/COMMAND.md`|explain commands|read|
 |`COMPILE`|`os/min/commands/COMPILE.md`|regen `os/min`|write/remove `os/min` only|
 |`SHOW_DELTAS`|`os/min/commands/SHOW_DELTAS.md`|summarize Git deltas|read|
@@ -23,6 +24,7 @@ Loaded:
 
 Lazy registry:
 - BOOT -> os/min/BOOT.md
+- ADD_CHANGE_LOG -> os/min/commands/ADD_CHANGE_LOG.md
 - COMMAND -> os/min/commands/COMMAND.md
 - COMPILE -> os/min/commands/COMPILE.md
 - SHOW_DELTAS -> os/min/commands/SHOW_DELTAS.md

@@ -23,10 +23,10 @@ The changelog is meant for users and collaborators who want to understand what c
 The agent must load and execute:
 
 ```text
-os/commands/git/SHOW_DELTAS.md
+os/commands/SHOW_DELTAS.md
 ```
 
-`SHOW_DELTAS` is the source of truth for detecting and summarizing current Git deltas. If the user or another document refers to `SHOW_DELTA`, treat it as a reference to the existing `SHOW_DELTAS` command unless a separate `SHOW_DELTA` command document is later added.
+`SHOW_DELTAS` is the source of truth for detecting and summarizing current Git deltas. The legacy path `os/commands/git/SHOW_DELTAS.md` may exist as supporting context, but `os/commands/SHOW_DELTAS.md` is canonical for command discovery. If the user or another document refers to `SHOW_DELTA`, treat it as a reference to the existing `SHOW_DELTAS` command unless a separate `SHOW_DELTA` command document is later added.
 
 ---
 
@@ -95,7 +95,7 @@ Only update the semantic version line. Do not rewrite unrelated `os/BOOT.md` con
 
 When invoked, the agent must:
 
-1. Run `SHOW_DELTAS` exactly as defined by `os/commands/git/SHOW_DELTAS.md`.
+1. Run `SHOW_DELTAS` exactly as defined by `os/commands/SHOW_DELTAS.md`.
 2. Determine whether any deltas exist from the Git status and diff data.
 3. If no deltas exist, do not create a changelog entry and do not update the semantic version.
 4. If deltas exist, create the next dated entry directory.

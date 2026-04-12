@@ -1,6 +1,6 @@
 # **Agent OS Boot**
 
-Semantic Version: `0.2.0`
+Semantic Version: `1.1.0`
 
 Start here.
 
