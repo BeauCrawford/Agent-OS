@@ -1,8 +1,10 @@
 # ADD_CHANGE_LOG
 
-Trigger `ADD_CHANGE_LOG`. Goal: run `SHOW_DELTAS`; if deltas exist, create next user changelog entry and bump `os/BOOT.md` semver.
+Trigger `ADD_CHANGE_LOG`. Goal: run `SHOW_DELTAS`; if deltas exist, create next user changelog entry and bump target workspace `os/BOOT.md` semver.
 
-Effects allowed: create `change-log/YYYY/MM/DD-NN/README.md`; create needed parent dirs; edit only `Semantic Version:` line in `os/BOOT.md` after entry creation. Forbidden: overwrite/modify/delete existing changelog entries; edit other source content; alter Git state.
+Path authority: load `SHOW_DELTAS` as an Agent OS resource; apply changelog/version side effects in host workspace unless user/command explicitly selects another target.
+
+Effects allowed: create target workspace `change-log/YYYY/MM/DD-NN/README.md`; create needed parent dirs; edit only `Semantic Version:` line in target workspace `os/BOOT.md` after entry creation. Forbidden: overwrite/modify/delete existing changelog entries; edit other source content; alter Git state.
 
 Do:
 1. Execute canonical `os/commands/SHOW_DELTAS.md` behavior; treat `SHOW_DELTA` reference as existing `SHOW_DELTAS`.

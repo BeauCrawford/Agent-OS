@@ -2,7 +2,7 @@
 
 Trigger `COMPILE`. Audience LLM. Goal: regenerate `os/min` with minimum tokens while preserving behavior.
 
-Inputs default: `source_root=os`, `output_root=os/min`. Effects allowed: create/replace/remove only inside `os/min`; no source edits outside `os/min`; no Git/system/network changes.
+Inputs default: `source_root=os`, `output_root=os/min`. Resolve these as Agent OS resource paths. Effects allowed: create/replace/remove only inside Agent OS `os/min`; no source edits outside `os/min`; no Git/system/network changes.
 
 Do:
 1. Read source docs from `os` excluding `os/min`; discover direct child `os/commands/*.md` only.
