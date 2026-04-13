@@ -34,7 +34,7 @@ When invoked, the agent must:
 
 ## **Recommended Git Commands**
 
-Run these from the repository root:
+Run these from the host workspace repository root:
 
 ```powershell
 git status --short

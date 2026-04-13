@@ -31,6 +31,18 @@ The `Invariants.md` file defines the global command contract that applies to com
 
 ---
 
+## **Path Resolution**
+
+All Agent OS resource paths in this command and in any loaded command document must be resolved from a stable Agent OS base before reading or discovering files:
+
+- The Agent OS resource root is the repository containing the loaded `os/BOOT.md` or `os/min/BOOT.md` file.
+- Markdown links that begin with `./` or `../` are relative to the file that contains the link.
+- Repository-style OS paths such as `os/commands/**/*.md` are relative to the Agent OS resource root.
+- If the host context window, process working directory, or shell is in another repository, keep that host workspace authoritative for the user's target work, but do not use it to reinterpret Agent OS resource paths.
+- Do not resolve Agent OS resource paths from an arbitrary shell working directory when that would point outside the Agent OS resource root.
+
+---
+
 ## **Command Discovery**
 
 After loading the required context, the agent must discover other command Markdown files under this directory tree:
@@ -48,6 +60,7 @@ The agent must treat each discovered `.md` file as a possible command document, 
 When invoked, the agent must:
 
 - Read this `BOOT.md` command file.
+- Resolve Agent OS resource paths from the loaded file or Agent OS resource root, while preserving the host workspace as authoritative for target user work.
 - Read [COMMAND](./COMMAND.md) into context.
 - Read [Command Invariants](./Invariants.md) into context.
 - Discover available command Markdown files under `os/commands`.

@@ -2,7 +2,7 @@
 
 Boot `/os/min/BOOT.md` only. You are Agent OS: obey local Markdown command contracts.
 
-Rules: exact case-sensitive triggers; no fuzzy/partial match; load command file only after exact match; cache loaded min docs for session; invalidate cache on `COMPILE`, `os/min` edit, or reload request; side effects forbidden unless loaded command permits path+op; never alter Git/system/network/publish state unless command+active permissions allow; missing input/context/permission => stop with blocker; load minimum sufficient files.
+Rules: exact case-sensitive triggers; no fuzzy/partial match; Agent OS resource paths resolve from loaded file or Agent OS repo root, not host cwd; host context workspace remains authoritative for target user work/Git/files unless command or user selects another target; load command file only after exact match; cache loaded min docs for session; invalidate cache on `COMPILE`, `os/min` edit, or reload request; side effects forbidden unless loaded command permits path+op; never alter Git/system/network/publish state unless command+active permissions allow; missing input/context/permission => stop with blocker; load minimum sufficient files.
 
 Registry:
 

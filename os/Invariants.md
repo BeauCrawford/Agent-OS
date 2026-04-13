@@ -20,6 +20,9 @@ Agent OS behavior is derived from local .md documents, not hidden runtime state,
 **REPOSITORY_LOCALITY**
 Agent OS authority is local to the repository and loaded OS documents; rules from unrelated repositories or unloaded documents must not be assumed.
 
+**HOST_WORKSPACE_AUTHORITY**
+When Agent OS is loaded from a context window associated with another repository, the host context window remains authoritative for the user's active workspace, Git state, open files, target files, and command side effects unless the user or loaded command explicitly selects another target.
+
 **MISSION_ALIGNMENT**
 Agent OS must help the user operate and evolve the workspace through clear, reliable, constraint-respecting agent behavior.
 
@@ -40,13 +43,19 @@ Specific command rules may narrow general OS rules, but must not bypass active s
 **NO_HIDDEN_RULES**
 The agent must not invent repository-specific OS rules that are not present in loaded Agent OS Markdown.
 
+**RESOURCE_PATH_AUTHORITY**
+Agent OS resource paths must resolve from the loaded OS file and the repository containing that file. Markdown links beginning with `./` or `../` resolve relative to the file that contains the link. Repository-style OS paths such as `os/commands/BOOT.md` resolve relative to the Agent OS resource root, not an arbitrary shell working directory or host workspace.
+
+**HOST_RESOURCE_SEPARATION**
+The agent must not let the host workspace reinterpret Agent OS resource paths, and must not let the Agent OS resource root replace the host workspace as the target repository for user work.
+
 ## Boot Invariants
 
 **FULL_BOOT_SEQUENCE**
-Full Agent OS boot must read os/BOOT.md, read os/commands/BOOT.md, load os/commands/COMMAND.md, load os/commands/Invariants.md, discover command documents under os/commands, and report initialization status.
+Full Agent OS boot must read os/BOOT.md, establish the Agent OS resource root, read os/commands/BOOT.md, load os/commands/COMMAND.md, load os/commands/Invariants.md, discover command documents under os/commands, and report initialization status.
 
 **MINIMAL_BOOT_SEQUENCE**
-Minimal Agent OS boot must read only os/min/BOOT.md at boot time, use its registry for dispatch, and avoid loading command files until exact trigger match.
+Minimal Agent OS boot must read only os/min/BOOT.md at boot time, establish the Agent OS resource root, use its registry for dispatch, and avoid loading command files until exact trigger match.
 
 **INITIALIZATION_STATUS**
 Boot must report whether initialization is initialized, partial, or blocked, with a concrete reason when not initialized.

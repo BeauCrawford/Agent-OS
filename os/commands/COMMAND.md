@@ -58,6 +58,18 @@ Commands are not fuzzy suggestions. They are executable operating context for th
 
 ---
 
+## **Path Rules**
+
+Commands must keep Agent OS resource paths separate from target workspace paths:
+
+- Agent OS resource paths identify OS Markdown, command documents, invariants, compiled OS files, or other files under the loaded Agent OS root.
+- Markdown links beginning with `./` or `../` are relative to the file that contains the link.
+- Repository-style OS paths such as `os/commands/SHOW_DELTAS.md` are relative to the Agent OS resource root.
+- Target workspace paths, Git state, and command side effects are relative to the host context workspace unless the user or loaded command explicitly selects another target.
+- A shell working directory from the host context must not reinterpret Agent OS resource paths.
+
+---
+
 ## **Invocation Rules**
 
 Commands should prefer exact triggers.
@@ -190,6 +202,7 @@ When invoked, the agent must:
 
 - Explain that Agent OS commands are Markdown files that define invokable agent behavior.
 - Describe the command lifecycle: trigger, input binding, validation, execution, output, and failure handling.
+- Explain that Agent OS resource paths resolve from the loaded OS root, while target workspace paths resolve from the host context workspace unless otherwise specified.
 - Emphasize that command Markdown is the source of truth.
 - Emphasize that input and output constraints are binding.
 - Emphasize that commands are read-only unless side effects are explicitly allowed.
