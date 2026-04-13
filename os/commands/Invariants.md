@@ -1,16 +1,20 @@
-# Command Invariants
+# **Agent OS Command Invariants**
 
-This document defines the exhaustive invariants that must hold true for any COMMAND in the Agent-OS system, exemplified by the `SHOW_DELTAS` command. Invariants ensure consistent, reliable, and safe command execution across all scenarios.
+---
 
-## Invocation Invariants
+## **1. Invocation Invariants**
 
-1. **Exact Trigger Matching**: The command must only activate when the user input exactly matches the defined trigger phrases (e.g., "SHOW_DELTAS" for the SHOW_DELTAS command). No partial matches or fuzzy interpretations are allowed.
+**COMMAND_INVOCATION_EXACT_TRIGGER_MATCHING**
+Commands must activate only when user input exactly matches the defined trigger phrases. Partial matches and fuzzy interpretations are not allowed.
 
-2. **Case Sensitivity**: Trigger phrases are case-sensitive and must match the documented form precisely.
+**COMMAND_INVOCATION_CASE_SENSITIVITY**
+Trigger phrases are case-sensitive and must match the documented form precisely.
 
-3. **No Ambiguity**: Commands must not overlap in trigger phrases; each phrase uniquely identifies one command.
+**COMMAND_INVOCATION_NO_AMBIGUITY**
+Command trigger phrases must not overlap. Each trigger phrase must identify one command unambiguously.
 
-4. **Context Independence**: Invocation must succeed regardless of the current workspace state, file open, or previous commands, as long as the repository or environment supports the command's requirements.
+**COMMAND_INVOCATION_CONTEXT_INDEPENDENCE**
+Command invocation must succeed regardless of current workspace state, open file, or previous commands, as long as the repository or environment satisfies the command requirements.
 
 5. **Path Authority Separation**: Command documents may be loaded from an Agent OS repository while the user's active context window belongs to another repository. Agent OS resource paths in command documents must resolve from the loaded file or Agent OS resource root, while target workspace paths, Git state, and side effects remain relative to the host workspace unless the user or loaded command explicitly selects another target.
 
@@ -28,7 +32,8 @@ This document defines the exhaustive invariants that must hold true for any COMM
 
 11. **Isolation**: Execution must not depend on or interfere with concurrent processes, other commands, or external tools beyond its documented dependencies.
 
-## Output Invariants
+**COMMAND_EXECUTION_ATOMICITY**
+A command either executes fully or not at all. It must not leave intermediate states that make the system inconsistent.
 
 12. **Format Consistency**: Output must strictly adhere to the documented format, including sections, code blocks, and structure (e.g., deltas summary followed by commit message codebox).
 
@@ -42,7 +47,8 @@ This document defines the exhaustive invariants that must hold true for any COMM
 
 17. **Deterministic Content**: For the same input state, output must be identical, barring non-deterministic elements like timestamps (which are not present in SHOW_DELTAS).
 
-## Behavioral Invariants
+**COMMAND_OUTPUT_CONCISENESS**
+Output must be succinct, avoiding unnecessary verbosity while preserving essential details.
 
 18. **Purpose Alignment**: The command must fulfill its documented purpose exactly, without additional features or deviations.
 
@@ -56,7 +62,8 @@ This document defines the exhaustive invariants that must hold true for any COMM
 
 23. **Version Compatibility**: Must work with standard versions of dependencies (e.g., Git 2.x+), failing gracefully if incompatible.
 
-## Validation Invariants
+**COMMAND_BEHAVIOR_DESTRUCTIVE_SCOPE_LIMIT**
+Destructive or overwriting actions must be constrained to command-owned outputs unless the user explicitly authorizes a broader scope.
 
 24. **Self-Consistency**: Output elements must not contradict each other (e.g., summary matches the detailed diffs).
 
@@ -68,18 +75,53 @@ This document defines the exhaustive invariants that must hold true for any COMM
 
 28. **Compliance with Global Rules**: Must adhere to overarching system invariants, active tool permissions, repository safety rules, and command-specific side-effect scopes.
 
-## Example Application to SHOW_DELTAS
+## **5. Validation Invariants**
 
-- **Invocation**: Only triggers on "SHOW_DELTAS".
-- **Execution**: Runs Git status/diff commands without staging or committing.
-- **Output**: Provides deltas summary and formatted commit message.
-- **Behavior**: Read-only, safe for any Git repository state.
+**COMMAND_VALIDATION_SELF_CONSISTENCY**
+Output elements must not contradict each other.
 
-## Example Application to COMPILE
+**COMMAND_VALIDATION_INPUT_VALIDATION**
+Commands must validate all inputs and required states before proceeding, rejecting invalid scenarios.
 
-- **Invocation**: Only triggers on "COMPILE".
-- **Execution**: Reads source Agent OS Markdown and regenerates the compiled `/os/min` Markdown set.
-- **Output**: Reports generated files, removed stale files, and boot path.
-- **Behavior**: May create, update, and remove files only under `/os/min`; it must not alter source command documents or Git state.
+**COMMAND_VALIDATION_OUTPUT_VALIDATION**
+Commands must internally verify that output meets format and content requirements before emitting it.
 
-These invariants ensure commands like SHOW_DELTAS are reliable, safe, and predictable.
+**COMMAND_VALIDATION_AUDITABILITY**
+Execution should be traceable through reproducible steps or logs, though internal trace details need not be exposed to the user.
+
+**COMMAND_VALIDATION_GLOBAL_RULE_COMPLIANCE**
+Commands must adhere to overarching OS invariants, active tool permissions, repository safety rules, and command-specific side-effect scopes.
+
+---
+
+## **6. Example Application Invariants**
+
+**COMMAND_EXAMPLE_SHOW_DELTAS_INVOCATION**
+`SHOW_DELTAS` only triggers on `SHOW_DELTAS`.
+
+**COMMAND_EXAMPLE_SHOW_DELTAS_EXECUTION**
+`SHOW_DELTAS` runs Git status and diff commands without staging or committing.
+
+**COMMAND_EXAMPLE_SHOW_DELTAS_OUTPUT**
+`SHOW_DELTAS` provides a deltas summary and formatted commit message.
+
+**COMMAND_EXAMPLE_SHOW_DELTAS_BEHAVIOR**
+`SHOW_DELTAS` is read-only and safe for any valid Git repository state.
+
+**COMMAND_EXAMPLE_COMPILE_INVOCATION**
+`COMPILE` only triggers on `COMPILE`.
+
+**COMMAND_EXAMPLE_COMPILE_EXECUTION**
+`COMPILE` reads source Agent OS Markdown and regenerates the compiled `/os/min` Markdown set.
+
+**COMMAND_EXAMPLE_COMPILE_OUTPUT**
+`COMPILE` reports generated files, removed stale files, and the compiled boot path.
+
+**COMMAND_EXAMPLE_COMPILE_BEHAVIOR**
+`COMPILE` may create, update, and remove files only under `/os/min`; it must not alter source command documents or Git state.
+
+---
+
+## **Ultra-Compressed Kernel**
+
+**Agent OS commands must execute only from exact Markdown-defined authority, remain read-only unless explicitly scoped otherwise, preserve user and workspace safety, and produce truthful output in the required command format.**
